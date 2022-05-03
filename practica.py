@@ -90,6 +90,38 @@ def graficar(operacion,redimg1,redimg2,redimgop):
     plt.axis('off')
     plt.title("Imagen 1 Ecualizada")
 
+#--------------------Operacion------------------
+    fig.add_subplot(fila,columna,2)
+    plt.imshow(redimgop)
+    plt.axis('off')
+    plt.title("Imagen 2:"+operacion)
+
+    fig.add_subplot(fila,columna,5)
+    color = ('r','g','b')
+    for i, c in enumerate(color):
+        hist = cv2.calcHist([redimgop], [i], None, [256], [0, 256])
+        plt.plot(hist, color = c)
+        plt.xlim([0,256])
+
+    plt.title("Histograma: "+operacion)
+    fig.add_subplot(fila,columna,8)
+    #aqui va el calculo del ecualizado
+    img_to_yuv = cv2.cvtColor(redimgop,cv2.COLOR_RGB2YUV)
+    img_to_yuv[:,:,0] = cv2.equalizeHist(img_to_yuv[:,:,0])
+    equaimgOp = cv2.cvtColor(img_to_yuv, cv2.COLOR_YUV2RGB)
+    color = ('r','g','b')
+    for i, c in enumerate(color):
+        hist = cv2.calcHist([equaimgOp], [i], None, [256], [0, 256])
+        plt.plot(hist, color = c)
+        plt.xlim([0,256])
+        
+    plt.title("Histograma img Ecualizada:"+operacion)
+
+    fig.add_subplot(fila,columna,11)
+    plt.imshow(equaimgOp)
+    plt.axis('off')
+    plt.title("Imagen Ecualizada: "+operacion)
+    plt.show()
 
 
 operacion="Suma"
