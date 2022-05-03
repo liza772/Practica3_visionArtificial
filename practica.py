@@ -24,6 +24,42 @@ Redimg2 = cv2.resize(img2, (300, 200))
 Redimg1 = cv2.cvtColor(Redimg1, cv2.COLOR_BGR2RGB)
 Redimg2 = cv2.cvtColor(Redimg2, cv2.COLOR_BGR2RGB)
 
+def graficar(operacion,redimg1,redimg2,redimgop):
+    global fila 
+    global columna
+    fig = plt.figure(figsize=(10,7), constrained_layout=True)
+    fig.add_subplot(fila,columna,1)
+    plt.imshow(redimg1)
+    plt.axis('off')
+    plt.title("Imagen 1")
+
+    fig.add_subplot(fila,columna,4)
+    color = ('r','g','b')
+    for i, c in enumerate(color):
+        hist = cv2.calcHist([redimg1], [i], None, [256], [0, 256])
+        plt.plot(hist, color = c)
+        plt.xlim([0,256])
+
+    plt.title("Histograma img 1")
+    fig.add_subplot(fila,columna,7)
+    #aqui va el calculo del ecualizado
+    img_to_yuv = cv2.cvtColor(Redimg1,cv2.COLOR_RGB2YUV)
+    img_to_yuv[:,:,0] = cv2.equalizeHist(img_to_yuv[:,:,0])
+    equaimg1 = cv2.cvtColor(img_to_yuv, cv2.COLOR_YUV2RGB)
+    color = ('r','g','b')
+    for i, c in enumerate(color):
+        hist = cv2.calcHist([equaimg1], [i], None, [256], [0, 256])
+        plt.plot(hist, color = c)
+        plt.xlim([0,256])
+        
+    plt.title("Histograma img 1 Ecualizada")
+
+    fig.add_subplot(fila,columna,10)
+    plt.imshow(equaimg1)
+    plt.axis('off')
+    plt.title("Imagen 1 Ecualizada")
+
+
 
 
 operacion="Suma"
