@@ -15,3 +15,11 @@ columna = 3
 #Imágenes Iniciales
 img1 = cv2.imread('floramarilla.png', 1)
 img2 = cv2.imread('florazul.png', 1)
+
+#Dimencionamiento en bruto
+Redimg1 = cv2.resize(img1, (300, 200))
+Redimg2 = cv2.resize(img2, (300, 200))
+
+#De matriz BGR a RGB
+Redimg1 = cv2.cvtColor(Redimg1, cv2.COLOR_BGR2RGB)
+Redimg2 = cv2.cvtColor(Redimg2, cv2.COLOR_BGR2RGB)
